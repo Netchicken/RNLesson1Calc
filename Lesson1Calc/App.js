@@ -82,7 +82,7 @@ const App = () => {
         }}>
         <Text>Simple Calculator</Text>
 
-        <View className="output">{calculation || 'Enter a number'}</View>
+        <Text className="output">{calculation || 'Enter a number'}</Text>
 
         <CalcButtons updateCalculation={updateCalculation} />
         <View className="digits">
