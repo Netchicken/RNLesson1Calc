@@ -45,8 +45,10 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
+  const [size, setSize] = useState('');
+
   const updateCalculation = value => {
-    console.log('updateCalculation', value + ' ' + calculation);
+    alert('updateCalculation' + ' ' + value + ' ' + calculation);
     setCalculation(calculation + String(value)); //add the value to the growing string
 
     //if you press = then evaluate the calculation
@@ -82,18 +84,60 @@ const App = () => {
         }}>
         <Text>Simple Calculator</Text>
 
-        <Text className="output">{calculation || 'Enter a number'}</Text>
+        <Text style={styles.output}>{calculation || 'Enter a number'}</Text>
 
-        <CalcButtons updateCalculation={updateCalculation} />
-        <View className="digits">
+        <ScrollView style={'output'}>
+          <CalcButtons updateCalculation={updateCalculation} size={size} />
+        </ScrollView>
+
+        <ScrollView style={'digits'}>
           <ButtonKeyPad updateCalculation={updateCalculation} />
-        </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  calcbox: {
+    // boxshadow: 0, 0, 100, #06678a,
+    padding: 20,
+    // margin: 20, auto,
+    width: 300 /*width of box */,
+  },
+
+  Button: {
+    //border: 0.5, solid, #9a9393;
+    // color: rgb(182, 241, 240),
+    // justifycontent: center,
+    // alignitems: center,
+    //backgroundcolor: #428e57,
+    width: 50,
+    height: 50,
+    // transition: all 0.4s ease-in-out;
+    // cursor: pointer;
+  },
+
+  
+  output: {
+    height: 50,
+    // boxshadow:  0, 0, 20, #d1ffef;
+    paddingright: 2,
+    // textalign: right,
+    fontsize: 30,
+    // display: flex,
+    opacity: 46.5,
+
+    // border: 1,
+    // solid,
+    // black,
+    // flexdirection: column,
+  },
+
+  preRes: {
+    opacity: 26.5,
+  },
+
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,

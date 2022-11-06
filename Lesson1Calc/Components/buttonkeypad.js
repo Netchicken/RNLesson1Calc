@@ -1,10 +1,33 @@
 import {
-  Button, //A basic button component that should render nicely on any platform. Supports a minimal level of customization.  https://reactnative.dev/docs/button
-  View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
+  View,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 
-export const ButtonKeyPad = props => {
+export const ButtonKeyPad = ({
+  onPress,
+  text,
+  size,
+  theme,
+  updateCalculation,
+}) => {
+  const buttonStyles = [styles.button];
+  const textStyles = [styles.text];
+
+  if (size === 'double') {
+    buttonStyles.push(styles.buttonDouble);
+  }
+
+  if (theme === 'secondary') {
+    buttonStyles.push(styles.buttonSecondary);
+    textStyles.push(styles.textSecondary);
+  } else if (theme === 'accent') {
+    buttonStyles.push(styles.buttonAccent);
+  }
+
   //lets make an array to hold all the buttons
   let buttons = [];
   //lets make a for loop that counts 10 times
@@ -12,27 +35,63 @@ export const ButtonKeyPad = props => {
     let istring = String(i); //i must be a string
     buttons.push(
       //add new buttons to the array
-      <Button
-        onPress={() => props.updateCalculation(i)}
+      <TouchableOpacity
+        onPress={() => updateCalculation(i)}
         Key={istring}
-        title={istring}
-      />,
+        title={istring}>
+        <Text>{istring}</Text>
+      </TouchableOpacity>,
     );
   }
 
   return (
     <View>
       {buttons}
-      <Button
-        onPress={() => props.updateCalculation('.')}
+      <TouchableOpacity
+        onPress={() => updateCalculation('.')}
         Key={'dot'}
         title="."
       />
-      <Button
-        onPress={() => props.updateCalculation('del')}
+      <TouchableOpacity
+        onPress={() => updateCalculation('del')}
         Key={'del'}
         title="Del"
       />
     </View>
   );
 };
+
+// set dimmenstion
+const screen = Dimensions.get('window');
+const buttonWidth = screen.width / 4;
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#333333',
+    flex: 1,
+    height: Math.floor(buttonWidth - 10),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: Math.floor(buttonWidth),
+    margin: 5,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 24,
+  },
+  textSecondary: {
+    color: '#060606',
+  },
+  buttonDouble: {
+    width: screen.width / 2 - 10,
+    flex: 0,
+    alignItems: 'flex-start',
+    paddingLeft: 40,
+  },
+  buttonSecondary: {
+    backgroundColor: '#a6a6a6',
+  },
+  buttonAccent: {
+    backgroundColor: '#ffc107',
+  },
+});
