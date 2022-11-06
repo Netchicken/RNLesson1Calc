@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-
+import Row from 'Row';
 export const ButtonKeyPad = ({
   onPress,
   text,
@@ -46,17 +46,19 @@ export const ButtonKeyPad = ({
 
   return (
     <View>
-      {buttons}
-      <TouchableOpacity
-        onPress={() => updateCalculation('.')}
-        Key={'dot'}
-        title="."
-      />
-      <TouchableOpacity
-        onPress={() => updateCalculation('del')}
-        Key={'del'}
-        title="Del"
-      />
+      <Row>{buttons}</Row>
+      <Row>
+        <TouchableOpacity
+          onPress={() => updateCalculation('.')}
+          Key={'dot'}
+          title="."
+        />
+        <TouchableOpacity
+          onPress={() => updateCalculation('del')}
+          Key={'del'}
+          title="Del"
+        />
+      </Row>
     </View>
   );
 };

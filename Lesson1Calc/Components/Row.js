@@ -1,4 +1,5 @@
 import {StyleSheet, View} from 'react-native';
+import React from 'react';
 //in the row component, there is 1 prop that we need, namely: children
 const Row = ({children}) => {
   return <View style={styles.container}>{children}</View>;

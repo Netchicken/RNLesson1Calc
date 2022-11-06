@@ -2,7 +2,6 @@ import {
   SafeAreaView, //The purpose of SafeAreaView is to render content within the safe area boundaries of a device. It is currently only applicable to iOS devices with iOS version 11 or later. https://reactnative.dev/docs/safeareaview
   ScrollView,
   StatusBar, //Component to control the app's status bar. The status bar is the zone, typically at the top of the screen, that displays the current time, Wi-Fi and cellular network information, battery level and/or other status icons. https://reactnative.dev/docs/statusbar
-  Button, //A basic button component that should render nicely on any platform. Supports a minimal level of customization.  https://reactnative.dev/docs/button
   StyleSheet,
   Text,
   useColorScheme,
@@ -14,7 +13,7 @@ import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
 //import Inputs from './Components/inputs';
 import {ButtonKeyPad} from './Components/buttonkeypad';
-
+import Row from './Components/Row';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 // const Section = ({children, title}) => {
@@ -45,10 +44,9 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
-  const [size, setSize] = useState('');
 
   const updateCalculation = value => {
-    alert('updateCalculation' + ' ' + value + ' ' + calculation);
+    // alert('updateCalculation' + ' ' + value + ' ' + calculation);
     setCalculation(calculation + String(value)); //add the value to the growing string
 
     //if you press = then evaluate the calculation
@@ -73,28 +71,30 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-        <Text>Simple Calculator</Text>
+    <View style={styles.container}>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+          <Text>Simple Calculator</Text>
 
-        <Text style={styles.output}>{calculation || 'Enter a number'}</Text>
+          <Text style={styles.output}>{calculation || 'Enter a number'}</Text>
 
-        <ScrollView style={'output'}>
-          <CalcButtons updateCalculation={updateCalculation} size={size} />
-        </ScrollView>
+          <Row style={'output'}>
+            <CalcButtons updateCalculation={updateCalculation} />
+          </Row>
 
-        <ScrollView style={'digits'}>
-          <ButtonKeyPad updateCalculation={updateCalculation} />
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+          <ScrollView style={'digits'}>
+            <ButtonKeyPad updateCalculation={updateCalculation} />
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    </View>
   );
 };
 
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     // cursor: pointer;
   },
 
-  
   output: {
     height: 50,
     // boxshadow:  0, 0, 20, #d1ffef;
