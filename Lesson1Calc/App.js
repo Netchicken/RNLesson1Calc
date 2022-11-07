@@ -1,10 +1,10 @@
 import {
   SafeAreaView, //The purpose of SafeAreaView is to render content within the safe area boundaries of a device. It is currently only applicable to iOS devices with iOS version 11 or later. https://reactnative.dev/docs/safeareaview
-  ScrollView,
+  ScrollView, // ScrollView is to render content within the safe area boundaries of a device. It is currently only applicable to iOS devices with iOS version 11 or later. https://reactnative.dev/docs/scrollview
   StatusBar, //Component to control the app's status bar. The status bar is the zone, typically at the top of the screen, that displays the current time, Wi-Fi and cellular network information, battery level and/or other status icons. https://reactnative.dev/docs/statusbar
   StyleSheet,
   Text,
-  useColorScheme,
+  useColorScheme, //A hook to get the current color scheme preference of the user. This preference is set in the native OS settings. https://reactnative.dev/docs/usecolorscheme
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
 } from 'react-native';
 import {React, useState} from 'react';
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     // display: flex,
     borderRadius: 4,
     fontsize: 30,
-    
+
     opacity: 46.5,
 
     border: 1,

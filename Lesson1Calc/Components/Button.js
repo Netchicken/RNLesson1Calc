@@ -1,4 +1,9 @@
-import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  Dimensions, // get the screen dimensions
+  StyleSheet, // CSS-like styles
+  Text, // Renders text
+  TouchableOpacity, // Handles row presses
+} from 'react-native';
 
 export default ({onPress, text, size, theme}) => {
   const buttonStyles = [styles.button];

@@ -3,14 +3,13 @@ import {
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
   StyleSheet, //StyleSheet.create returns a stylesheet object. https://reactnative.dev/docs/stylesheet
   Dimensions, //Dimensions provides access to the window's width and height. https://reactnative.dev/docs/dimensions
+  TouchableOpacity, //A wrapper for making views respond properly to touches. On press down, the opacity of the wrapped view is decreased, dimming it. https://reactnative.dev/docs/touchableopacity
+  Text, //A React component for displaying text which supports nesting, styling, and touch handling. https://reactnative.dev/docs/text
 } from 'react-native';
 import React from 'react';
 import Row from './Row';
 
 export const CalcButtons = ({updateCalculation}) => {
-  const buttonStyles = [styles.button];
-  const textStyles = [styles.text];
-
   return (
     <View>
       <Row>
@@ -21,25 +20,26 @@ export const CalcButtons = ({updateCalculation}) => {
         />
         <Button
           onPress={() => updateCalculation('-')}
-          style={buttonStyles}
+          style={styles.button}
           title="-"
         />
         <Button
           onPress={() => updateCalculation('*')}
-          style={buttonStyles}
+          style={styles.button}
           title="X"
         />
 
         <Button
           onPress={() => updateCalculation('/')}
-          style={buttonStyles}
+          style={styles.button}
           title="/"
         />
         <Button
           onPress={() => updateCalculation('=')}
-          style={buttonStyles}
+          style={styles.button}
           title="="
         />
+
         <Button
           onPress={() => updateCalculation('clear')}
           style={styles.button}
@@ -49,13 +49,13 @@ export const CalcButtons = ({updateCalculation}) => {
     </View>
   );
 };
-// export default CalcButtons;
+
 // set dimmenstion
 const screen = Dimensions.get('window');
 const buttonWidth = screen.width / 4;
 
 const styles = StyleSheet.create({
-  button: {
+  Button: {
     backgroundColor: '#333333',
     flex: 1,
     height: Math.floor(buttonWidth - 50),
@@ -63,9 +63,20 @@ const styles = StyleSheet.create({
     justifyContent: 'stretch',
     borderRadius: Math.floor(buttonWidth),
     margin: 5,
+    padding: 10,
   },
+  button2: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+    elevation: 3,
+    color: 'black',
+  },
+
   text: {
-    color: '#fff',
-    fontSize: 24,
+    color: 'red',
+    fontSize: 14,
   },
 });
