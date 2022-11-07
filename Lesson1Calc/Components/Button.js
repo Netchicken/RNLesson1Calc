@@ -16,6 +16,7 @@ export default ({onPress, text, size, theme}) => {
   }
 
   return (
+    // eslint-disable-next-line react/react-in-jsx-scope
     <TouchableOpacity onPress={onPress} style={buttonStyles}>
       <Text style={textStyles}>{text}</Text>
     </TouchableOpacity>

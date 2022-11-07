@@ -8,10 +8,8 @@ import {
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
 } from 'react-native';
 import {React, useState} from 'react';
-//import './App.css';
-// import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
-//import Inputs from './Components/inputs';
+
 import {ButtonKeyPad} from './Components/buttonkeypad';
 import Row from './Components/Row';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -84,8 +82,11 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Text>Simple Calculator</Text>
-          <CalcButtons updateCalculation={updateCalculation} />
           <Text style={styles.output}>{calculation || 'Enter a number'}</Text>
+          <Row>
+            <CalcButtons updateCalculation={updateCalculation} />
+          </Row>
+
           <Row>
             <Button text="0" onPress={() => updateCalculation(0)} />
             <Button text="1" onPress={() => updateCalculation(1)} />
@@ -109,7 +110,6 @@ const App = () => {
           <Row>
             <Button text="=" onPress={() => updateCalculation('=')} />
             <Button text="Del" onPress={() => updateCalculation('del')} />
-       
           </Row>
           {/* <ScrollView style={'digits'}>
             <ButtonKeyPad updateCalculation={updateCalculation} />
@@ -143,16 +143,19 @@ const styles = StyleSheet.create({
   output: {
     height: 50,
     // boxshadow:  0, 0, 20, #d1ffef;
-    paddingright: 2,
-    // textalign: right,
-    fontsize: 30,
     // display: flex,
+    borderRadius: 4,
+    fontsize: 30,
+    
     opacity: 46.5,
 
-    // border: 1,
-    // solid,
-    // black,
-    // flexdirection: column,
+    border: 1,
+    padding: 8,
+
+    backgroundColor: 'oldlace',
+    alignSelf: 'flex-start',
+    marginRight: 10,
+    marginBottom: 10,
   },
 
   preRes: {
