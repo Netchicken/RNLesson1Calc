@@ -9,6 +9,8 @@ const Row = ({children}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignContent: 'flex-start',
+    flexWrap: 'wrap',
   },
 });
 

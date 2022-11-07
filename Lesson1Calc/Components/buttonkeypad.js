@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import Row from 'Row';
+import Row from './Row';
 export const ButtonKeyPad = ({
   onPress,
   text,
@@ -16,6 +16,9 @@ export const ButtonKeyPad = ({
 }) => {
   const buttonStyles = [styles.button];
   const textStyles = [styles.text];
+
+  //  const rowStart = ({i}) => {
+  //    return ((i % 4 === 0) ? <Row>: null)};
 
   if (size === 'double') {
     buttonStyles.push(styles.buttonDouble);
@@ -32,33 +35,37 @@ export const ButtonKeyPad = ({
   let buttons = [];
   //lets make a for loop that counts 10 times
   for (let i = 0; i < 10; i++) {
+    //  rowStart({i});
     let istring = String(i); //i must be a string
     buttons.push(
       //add new buttons to the array
       <TouchableOpacity
         onPress={() => updateCalculation(i)}
         Key={istring}
-        title={istring}>
-        <Text>{istring}</Text>
+        title={istring}
+        style={buttonStyles}>
+        <Text style={textStyles}>{istring}</Text>
       </TouchableOpacity>,
+      //  rowEnd({i}),
     );
   }
 
   return (
     <View>
-      <Row>{buttons}</Row>
-      <Row>
-        <TouchableOpacity
-          onPress={() => updateCalculation('.')}
-          Key={'dot'}
-          title="."
-        />
-        <TouchableOpacity
-          onPress={() => updateCalculation('del')}
-          Key={'del'}
-          title="Del"
-        />
-      </Row>
+      {buttons}
+
+      <TouchableOpacity
+        onPress={() => updateCalculation('.')}
+        Key={'dot'}
+        title="."
+        style={buttonStyles}
+      />
+      <TouchableOpacity
+        onPress={() => updateCalculation('del')}
+        Key={'del'}
+        title="Del"
+        style={buttonStyles}
+      />
     </View>
   );
 };
