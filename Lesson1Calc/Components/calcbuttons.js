@@ -7,7 +7,7 @@ import {
   Text, //A React component for displaying text which supports nesting, styling, and touch handling. https://reactnative.dev/docs/text
 } from 'react-native';
 import React from 'react';
-import Row from './Row';
+import {Row} from './Row';
 
 export const CalcButtons = ({updateCalculation}) => {
   return (
@@ -64,15 +64,6 @@ const styles = StyleSheet.create({
     borderRadius: Math.floor(buttonWidth),
     margin: 5,
     padding: 10,
-  },
-  button2: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-    elevation: 3,
-    color: 'black',
   },
 
   text: {

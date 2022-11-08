@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
-import Row from './Components/Row';
-import {Button} from './Components/Button';
-import {ButtonKeyPad} from './Components/buttonkeypad';
+import {Row} from './Components/Row';
+import {SingleButton} from './Components/Button';
+// import { ButtonKeyPad } from './Components/buttonkeypad';
+import {NumberButtons} from './Components/NumberButtons';
 import bgImage from './Assets/waterdrops.jpg';
 
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
@@ -66,12 +67,6 @@ const App = () => {
     }
   };
 
-  // const isDarkMode = useColorScheme() === 'dark';
-
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
-
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -88,39 +83,41 @@ const App = () => {
             style={styles.image}
           /> */}
           <Text style={styles.sectionTitle}>Simple Calculator</Text>
-
           <Text style={styles.outputText}>
             {calculation || 'Enter a number'}
           </Text>
-
           <Row>
             <CalcButtons updateCalculation={updateCalculation} />
           </Row>
-          {/* <ButtonKeyPad updateCalculation={updateCalculation} /> */}
-          <Row>
-            <Button text="0" onPress={() => updateCalculation(0)} />
-            <Button text="1" onPress={() => updateCalculation(1)} />
-            <Button text="2" onPress={() => updateCalculation(2)} />
+          <NumberButtons updateCalculation={updateCalculation} />
+
+          {/* <Row>
+            <SingleButton text="0" onPress={() => updateCalculation(0)} />
+            <SingleButton text="1" onPress={() => updateCalculation(1)} />
+            <SingleButton text="2" onPress={() => updateCalculation(2)} />
           </Row>
           <Row>
-            <Button text="3" onPress={() => updateCalculation(3)} />
-            <Button text="4" onPress={() => updateCalculation(4)} />
-            <Button text="5" onPress={() => updateCalculation(5)} />
+            <SingleButton text="3" onPress={() => updateCalculation(3)} />
+            <SingleButton text="4" onPress={() => updateCalculation(4)} />
+            <SingleButton text="5" onPress={() => updateCalculation(5)} />
           </Row>
           <Row>
-            <Button text="6" onPress={() => updateCalculation(6)} />
-            <Button text="7" onPress={() => updateCalculation(7)} />
-            <Button text="8" onPress={() => updateCalculation(8)} />
+            <SingleButton text="6" onPress={() => updateCalculation(6)} />
+            <SingleButton text="7" onPress={() => updateCalculation(7)} />
+            <SingleButton text="8" onPress={() => updateCalculation(8)} />
           </Row>
           <Row>
-            <Button text="9" onPress={() => updateCalculation(6)} />
-            <Button text="." onPress={() => updateCalculation('.')} />
-            <Button text="Clear" onPress={() => updateCalculation('clear')} />
+            <SingleButton text="9" onPress={() => updateCalculation(6)} />
+            <SingleButton text="." onPress={() => updateCalculation('.')} />
+            <SingleButton
+              text="Clear"
+              onPress={() => updateCalculation('clear')}
+            />
           </Row>
           <Row>
-            <Button text="=" onPress={() => updateCalculation('=')} />
-            <Button text="Del" onPress={() => updateCalculation('del')} />
-          </Row>
+            <SingleButton text="=" onPress={() => updateCalculation('=')} />
+            <SingleButton text="Del" onPress={() => updateCalculation('del')} />
+          </Row> */}
         </View>
       </SafeAreaView>
     </View>
