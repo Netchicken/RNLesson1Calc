@@ -6,14 +6,16 @@ import {
   Text,
   useColorScheme, //A hook to get the current color scheme preference of the user. This preference is set in the native OS settings. https://reactnative.dev/docs/usecolorscheme
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
+  ImageBackground, //A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll. https://reactnative.dev/docs/imagebackground  https://www.sitereq.com/post/two-easy-ways-to-add-react-native-background-image
+  Image, //A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll. https://reactnative.dev/docs/image
 } from 'react-native';
 import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
-
-import {ButtonKeyPad} from './Components/buttonkeypad';
 import Row from './Components/Row';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Button from './Components/Button';
+import {Button} from './Components/Button';
+import {ButtonKeyPad} from './Components/buttonkeypad';
+import bgImage from './Assets/waterdrops.jpg';
+
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
 
 // const Section = ({children, title}) => {
@@ -44,11 +46,11 @@ import Button from './Components/Button';
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
-
+  // const image ={ require('../assets/waterdrops.jpg')};
   const updateCalculation = value => {
     // alert('updateCalculation' + ' ' + value + ' ' + calculation);
     setCalculation(calculation + String(value)); //add the value to the growing string
-
+    console.log('updateCalculation all', calculation);
     //if you press = then evaluate the calculation
     if (value === '=') {
       // eslint-disable-next-line no-new-func
@@ -64,29 +66,37 @@ const App = () => {
     }
   };
 
-  const isDarkMode = useColorScheme() === 'dark';
+  // const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  // const backgroundStyle = {
+  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // };
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text>Simple Calculator</Text>
-          <Text style={styles.output}>{calculation || 'Enter a number'}</Text>
+      <SafeAreaView>
+        <View>
+          {/* <Image
+            style={styles.tinyLogo}
+            source={{
+              uri: 'https://reactnative.dev/img/tiny_logo.png',
+            }}
+          /> */}
+          {/* <ImageBackground
+            resizeMode="cover"
+            source={bgImage}
+            style={styles.image}
+          /> */}
+          <Text style={styles.sectionTitle}>Simple Calculator</Text>
+
+          <Text style={styles.outputText}>
+            {calculation || 'Enter a number'}
+          </Text>
+
           <Row>
             <CalcButtons updateCalculation={updateCalculation} />
           </Row>
-
+          {/* <ButtonKeyPad updateCalculation={updateCalculation} /> */}
           <Row>
             <Button text="0" onPress={() => updateCalculation(0)} />
             <Button text="1" onPress={() => updateCalculation(1)} />
@@ -111,9 +121,6 @@ const App = () => {
             <Button text="=" onPress={() => updateCalculation('=')} />
             <Button text="Del" onPress={() => updateCalculation('del')} />
           </Row>
-          {/* <ScrollView style={'digits'}>
-            <ButtonKeyPad updateCalculation={updateCalculation} />
-          </ScrollView> */}
         </View>
       </SafeAreaView>
     </View>
@@ -127,39 +134,43 @@ const styles = StyleSheet.create({
     // margin: 20, auto,
     width: 300 /*width of box */,
   },
-
-  Button: {
-    //border: 0.5, solid, #9a9393;
-    // color: rgb(182, 241, 240),
-    // justifycontent: center,
-    // alignitems: center,
-    //backgroundcolor: #428e57,
-    width: 50,
-    height: 50,
-    // transition: all 0.4s ease-in-out;
-    // cursor: pointer;
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 
-  output: {
+  container: {},
+
+  containerText: {
+    marginTop: 5,
     height: 50,
-    // boxshadow:  0, 0, 20, #d1ffef;
-    // display: flex,
-    borderRadius: 4,
-    fontsize: 30,
+    marginBottom: 50,
+    flex: 0.3,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor: 'beige',
+    // borderWidth: 5,
+  },
 
-    opacity: 46.5,
-
+  outputText: {
+    // alignSelf: 'flex-start',
+    height: 50,
+    borderRadius: 40,
+    fontsize: 220,
+    fontWeight: 'bold',
+    // opacity: 46.5,
     border: 1,
-    padding: 8,
-
+    paddingLeft: 10,
+    paddingTop: 10,
     backgroundColor: 'oldlace',
-    alignSelf: 'flex-start',
-    marginRight: 10,
+    textAlignVertical: 'center',
+    textAlignment: 'right',
+    // marginRight: 10,
     marginBottom: 10,
-  },
-
-  preRes: {
-    opacity: 26.5,
+    // marginLeft: 10,
   },
 
   sectionContainer: {

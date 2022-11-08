@@ -4,36 +4,24 @@ import {
   Text, // Renders text
   TouchableOpacity, // Handles row presses
 } from 'react-native';
+import {React} from 'react';
 
-export default ({onPress, text, size, theme}) => {
-  const buttonStyles = [styles.button];
-  const textStyles = [styles.text];
-
-  if (size === 'double') {
-    buttonStyles.push(styles.buttonDouble);
-  }
-
-  if (theme === 'secondary') {
-    buttonStyles.push(styles.buttonSecondary);
-    textStyles.push(styles.textSecondary);
-  } else if (theme === 'accent') {
-    buttonStyles.push(styles.buttonAccent);
-  }
-
+export const Button = ({onPress, text}) => {
   return (
-    // eslint-disable-next-line react/react-in-jsx-scope
-    <TouchableOpacity onPress={onPress} style={buttonStyles}>
-      <Text style={textStyles}>{text}</Text>
+    <TouchableOpacity onPress={onPress} style={styles.button}>
+      <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
 };
-// set dimmenstion
+
 const screen = Dimensions.get('window');
 const buttonWidth = screen.width / 4;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#333333',
+    borderWidth: 3,
+    borderColor: '#64dded',
+    backgroundColor: '#ffffff',
     flex: 1,
     height: Math.floor(buttonWidth - 50),
     alignItems: 'center',
@@ -42,22 +30,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   text: {
-    color: '#fff',
+    color: '##060606',
     fontSize: 24,
-  },
-  textSecondary: {
-    color: '#060606',
-  },
-  buttonDouble: {
-    width: screen.width / 2 - 10,
-    flex: 0,
-    alignItems: 'flex-start',
-    paddingLeft: 40,
-  },
-  buttonSecondary: {
-    backgroundColor: '#a6a6a6',
-  },
-  buttonAccent: {
-    backgroundColor: '#ffc107',
   },
 });
