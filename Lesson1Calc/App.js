@@ -3,8 +3,7 @@ import {
   ScrollView, // ScrollView is to render content within the safe area boundaries of a device. It is currently only applicable to iOS devices with iOS version 11 or later. https://reactnative.dev/docs/scrollview
   StatusBar, //Component to control the app's status bar. The status bar is the zone, typically at the top of the screen, that displays the current time, Wi-Fi and cellular network information, battery level and/or other status icons. https://reactnative.dev/docs/statusbar
   StyleSheet,
-  Text,
-  useColorScheme, //A hook to get the current color scheme preference of the user. This preference is set in the native OS settings. https://reactnative.dev/docs/usecolorscheme
+  Text, //Text is a React component for displaying text. https://reactnative.dev/docs/text
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
   ImageBackground, //A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll. https://reactnative.dev/docs/imagebackground  https://www.sitereq.com/post/two-easy-ways-to-add-react-native-background-image
   Image, //A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll. https://reactnative.dev/docs/image
@@ -41,36 +40,36 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
-        <ScrollView>
-          <View>
-            <Text style={styles.sectionTitle}>Simple Calculator</Text>
-            <View style={styles.calcBox}>
-              <Text style={styles.outputText}>
-                {calculation || 'Enter a number'}
-              </Text>
-            </View>
-            <Row>
-              <CalcButtons updateCalculation={updateCalculation} />
-            </Row>
-            <NumberButtons updateCalculation={updateCalculation} />
-            <ImageBackground
-              resizeMode="cover"
-              source={BackGroundImage}
-              style={styles.image}
-            />
+    <ImageBackground
+      resizeMode="cover"
+      source={require('./Assets/waterdrops.jpg')}
+      style={styles.image}>
+      <View style={styles.container}>
+        <SafeAreaView>
+          <ScrollView>
+            <View>
+              <Text style={styles.sectionTitle}>Simple Calculator</Text>
+              <View style={styles.calcBox}>
+                <Text style={styles.outputText}>
+                  {calculation || 'Enter a number'}
+                </Text>
+              </View>
+              <Row>
+                <CalcButtons updateCalculation={updateCalculation} />
+              </Row>
+              <NumberButtons updateCalculation={updateCalculation} />
 
-            <Image
-              style={styles.tinyLogo}
-              source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-              }}
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+              <Image
+                style={styles.tinyLogo}
+                source={{
+                  uri: 'https://reactnative.dev/img/tiny_logo.png',
+                }}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -80,7 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
   },
   tinyLogo: {
     width: '10%',
