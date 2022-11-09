@@ -2,31 +2,30 @@ import {
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
   StyleSheet, //StyleSheet.create returns a stylesheet object. https://reactnative.dev/docs/stylesheet
   Dimensions, //Dimensions provides access to the window's width and height. https://reactnative.dev/docs/dimensions
-  Pressable, //A wrapper for making views respond properly to touches. On press down, the opacity of the wrapped view is decreased, dimming it. https://reactnative.dev/docs/touchableopacity
+  Pressable,
   Text, //A React component for displaying text which supports nesting, styling, and touch handling. https://reactnative.dev/docs/text
 } from 'react-native';
 import React from 'react';
+import {PressableButton} from './Button';
 // import {Row} from './Row';
 
 export const CalcButtons = ({updateCalculation}) => {
   return (
     <View style={styles.rowcontainer}>
-      <Pressable onPress={() => updateCalculation('+')} style={styles.button}>
-        <Text style={styles.text}>{'+'}</Text>
-      </Pressable>
+      <PressableButton onPress={updateCalculation} symbol="+" />
+      <PressableButton onPress={updateCalculation} symbol="*" />
+      <PressableButton onPress={updateCalculation} symbol="/" />
+      <PressableButton onPress={updateCalculation} symbol="-" />
 
-      <Pressable onPress={() => updateCalculation('-')} style={styles.button}>
+      {/* <Pressable onPress={() => updateCalculation('-')} style={styles.button}>
         <Text style={styles.text}>{'-'}</Text>
       </Pressable>
-
       <Pressable onPress={() => updateCalculation('*')} style={styles.button}>
         <Text style={styles.text}>{'X'}</Text>
       </Pressable>
-
       <Pressable onPress={() => updateCalculation('/')} style={styles.button}>
         <Text style={styles.text}>{'/'}</Text>
-      </Pressable>
-
+      </Pressable> */}
       {/* <View style={{backgroundColor: 'blue', flex: 0.3}}>
         <Text>Hello World!</Text>
       </View> */}
@@ -42,7 +41,6 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     justifyContent: 'center',
-    // width: '25%',
     borderWidth: 3,
     borderColor: '#23e25c',
     backgroundColor: '#f06464',
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
 
   rowcontainer: {
     flexDirection: 'row',
-    width: '100%',
+    width: '100%', //you need this to see the buttons
     alignContent: 'flex-start',
     flexWrap: 'wrap',
     justifyContent: 'space-between',

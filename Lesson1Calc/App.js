@@ -70,22 +70,12 @@ const App = () => {
       <SafeAreaView>
         <ScrollView>
           <View>
-            <Image
-              style={styles.tinyLogo}
-              source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-              }}
-            />
-
             <Text style={styles.sectionTitle}>Simple Calculator</Text>
             <View style={styles.calcBox}>
               <Text style={styles.outputText}>
                 {calculation || 'Enter a number'}
               </Text>
             </View>
-
-           
-
             <Row>
               <CalcButtons updateCalculation={updateCalculation} />
             </Row>
@@ -94,6 +84,13 @@ const App = () => {
               resizeMode="cover"
               source={bgImage}
               style={styles.image}
+            />
+
+            <Image
+              style={styles.tinyLogo}
+              source={{
+                uri: 'https://reactnative.dev/img/tiny_logo.png',
+              }}
             />
           </View>
         </ScrollView>

@@ -3,6 +3,7 @@ import {
   StyleSheet, // CSS-like styles
   Text, // Renders text
   TouchableOpacity, // Handles row presses
+  Pressable, // Handles row presses
 } from 'react-native';
 import {React} from 'react';
 
@@ -11,6 +12,14 @@ export const SingleButton = ({onPress, text}) => {
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
+  );
+};
+
+export const PressableButton = ({onPress, symbol}) => {
+  return (
+    <Pressable onPress={() => onPress(symbol)} style={styles.buttonPress}>
+      <Text style={styles.textPress}>{symbol}</Text>
+    </Pressable>
   );
 };
 
@@ -32,5 +41,26 @@ const styles = StyleSheet.create({
   text: {
     color: '##060606',
     fontSize: 24,
+  },
+
+  buttonPress: {
+    flex: 1,
+    justifyContent: 'center',
+    borderWidth: 3,
+    borderColor: '#23e25c',
+    backgroundColor: '#f06464',
+
+    // height: Math.floor(buttonWidth - 150),
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    borderRadius: Math.floor(buttonWidth),
+    margin: 5,
+  },
+
+  textPress: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
   },
 });
