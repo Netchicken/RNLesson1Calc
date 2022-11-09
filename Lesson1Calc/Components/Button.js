@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#23e25c',
     backgroundColor: '#f06464',
-
-    // height: Math.floor(buttonWidth - 150),
     alignItems: 'center',
     alignSelf: 'stretch',
     borderRadius: Math.floor(buttonWidth),

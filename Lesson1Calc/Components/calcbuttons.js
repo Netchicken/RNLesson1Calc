@@ -16,19 +16,6 @@ export const CalcButtons = ({updateCalculation}) => {
       <PressableButton onPress={updateCalculation} symbol="*" />
       <PressableButton onPress={updateCalculation} symbol="/" />
       <PressableButton onPress={updateCalculation} symbol="-" />
-
-      {/* <Pressable onPress={() => updateCalculation('-')} style={styles.button}>
-        <Text style={styles.text}>{'-'}</Text>
-      </Pressable>
-      <Pressable onPress={() => updateCalculation('*')} style={styles.button}>
-        <Text style={styles.text}>{'X'}</Text>
-      </Pressable>
-      <Pressable onPress={() => updateCalculation('/')} style={styles.button}>
-        <Text style={styles.text}>{'/'}</Text>
-      </Pressable> */}
-      {/* <View style={{backgroundColor: 'blue', flex: 0.3}}>
-        <Text>Hello World!</Text>
-      </View> */}
     </View>
   );
 };
@@ -38,27 +25,6 @@ const screen = Dimensions.get('window');
 const buttonWidth = screen.width / 3;
 
 const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: '#23e25c',
-    backgroundColor: '#f06464',
-
-    // height: Math.floor(buttonWidth - 150),
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    borderRadius: Math.floor(buttonWidth),
-    margin: 5,
-  },
-
-  text: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlignVertical: 'center',
-  },
-
   rowcontainer: {
     flexDirection: 'row',
     width: '100%', //you need this to see the buttons

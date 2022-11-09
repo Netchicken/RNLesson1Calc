@@ -15,33 +15,8 @@ import {Row} from './Components/Row';
 import {NumberButtons} from './Components/NumberButtons';
 import bgImage from './Assets/waterdrops.jpg';
 
+const BackGroundImage = {bgImage};
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
-
-// const Section = ({children, title}) => {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//     </View>
-//   );
-// };
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
@@ -82,7 +57,7 @@ const App = () => {
             <NumberButtons updateCalculation={updateCalculation} />
             <ImageBackground
               resizeMode="cover"
-              source={bgImage}
+              source={BackGroundImage}
               style={styles.image}
             />
 
@@ -106,6 +81,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+  },
+  tinyLogo: {
+    width: '10%',
+    height: '10%',
   },
 
   container: {
