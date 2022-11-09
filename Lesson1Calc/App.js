@@ -12,8 +12,6 @@ import {
 import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
 import {Row} from './Components/Row';
-import {SingleButton} from './Components/Button';
-// import { ButtonKeyPad } from './Components/buttonkeypad';
 import {NumberButtons} from './Components/NumberButtons';
 import bgImage from './Assets/waterdrops.jpg';
 
@@ -70,67 +68,43 @@ const App = () => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <View>
-          {/* <Image
-            style={styles.tinyLogo}
-            source={{
-              uri: 'https://reactnative.dev/img/tiny_logo.png',
-            }}
-          /> */}
-          {/* <ImageBackground
-            resizeMode="cover"
-            source={bgImage}
-            style={styles.image}
-          /> */}
-          <Text style={styles.sectionTitle}>Simple Calculator</Text>
-          <Text style={styles.outputText}>
-            {calculation || 'Enter a number'}
-          </Text>
-          <Row>
-            <CalcButtons updateCalculation={updateCalculation} />
-          </Row>
-          <NumberButtons updateCalculation={updateCalculation} />
-
-          {/* <Row>
-            <SingleButton text="0" onPress={() => updateCalculation(0)} />
-            <SingleButton text="1" onPress={() => updateCalculation(1)} />
-            <SingleButton text="2" onPress={() => updateCalculation(2)} />
-          </Row>
-          <Row>
-            <SingleButton text="3" onPress={() => updateCalculation(3)} />
-            <SingleButton text="4" onPress={() => updateCalculation(4)} />
-            <SingleButton text="5" onPress={() => updateCalculation(5)} />
-          </Row>
-          <Row>
-            <SingleButton text="6" onPress={() => updateCalculation(6)} />
-            <SingleButton text="7" onPress={() => updateCalculation(7)} />
-            <SingleButton text="8" onPress={() => updateCalculation(8)} />
-          </Row>
-          <Row>
-            <SingleButton text="9" onPress={() => updateCalculation(6)} />
-            <SingleButton text="." onPress={() => updateCalculation('.')} />
-            <SingleButton
-              text="Clear"
-              onPress={() => updateCalculation('clear')}
+        <ScrollView>
+          <View>
+            <Image
+              style={styles.tinyLogo}
+              source={{
+                uri: 'https://reactnative.dev/img/tiny_logo.png',
+              }}
             />
-          </Row>
-          <Row>
-            <SingleButton text="=" onPress={() => updateCalculation('=')} />
-            <SingleButton text="Del" onPress={() => updateCalculation('del')} />
-          </Row> */}
-        </View>
+
+            <Text style={styles.sectionTitle}>Simple Calculator</Text>
+            <View style={styles.calcBox}>
+              <Text style={styles.outputText}>
+                {calculation || 'Enter a number'}
+              </Text>
+            </View>
+
+            <View style={{backgroundColor: 'blue', flex: 0.3}}>
+              <Text>Hello World!</Text>
+            </View>
+
+            <Row>
+              <CalcButtons updateCalculation={updateCalculation} />
+            </Row>
+            <NumberButtons updateCalculation={updateCalculation} />
+            <ImageBackground
+              resizeMode="cover"
+              source={bgImage}
+              style={styles.image}
+            />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  calcbox: {
-    // boxshadow: 0, 0, 100, #06678a,
-    padding: 20,
-    // margin: 20, auto,
-    width: 300 /*width of box */,
-  },
   image: {
     flex: 1,
     justifyContent: 'center',
@@ -139,7 +113,9 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 
-  container: {},
+  container: {
+    fontSize: 40,
+  },
 
   containerText: {
     marginTop: 5,
@@ -152,22 +128,20 @@ const styles = StyleSheet.create({
     // borderWidth: 5,
   },
 
-  outputText: {
-    // alignSelf: 'flex-start',
+  calcBox: {
     height: 50,
     borderRadius: 40,
-    fontsize: 220,
-    fontWeight: 'bold',
-    // opacity: 46.5,
-    border: 1,
-    paddingLeft: 10,
+    paddingLeft: 20,
     paddingTop: 10,
     backgroundColor: 'oldlace',
+    marginBottom: 10,
+    borderWidth: 1,
+  },
+  outputText: {
+    fontWeight: 'bold',
     textAlignVertical: 'center',
     textAlignment: 'right',
-    // marginRight: 10,
-    marginBottom: 10,
-    // marginLeft: 10,
+    fontSize: 30,
   },
 
   sectionContainer: {
