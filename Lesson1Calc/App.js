@@ -84,9 +84,7 @@ const App = () => {
               </Text>
             </View>
 
-            <View style={{backgroundColor: 'blue', flex: 0.3}}>
-              <Text>Hello World!</Text>
-            </View>
+           
 
             <Row>
               <CalcButtons updateCalculation={updateCalculation} />

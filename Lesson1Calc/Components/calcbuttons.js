@@ -1,73 +1,71 @@
 import {
-  Button, //A basic button component that should render nicely on any platform. Supports a minimal level of customization.  https://reactnative.dev/docs/button
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
   StyleSheet, //StyleSheet.create returns a stylesheet object. https://reactnative.dev/docs/stylesheet
   Dimensions, //Dimensions provides access to the window's width and height. https://reactnative.dev/docs/dimensions
-  TouchableOpacity, //A wrapper for making views respond properly to touches. On press down, the opacity of the wrapped view is decreased, dimming it. https://reactnative.dev/docs/touchableopacity
+  Pressable, //A wrapper for making views respond properly to touches. On press down, the opacity of the wrapped view is decreased, dimming it. https://reactnative.dev/docs/touchableopacity
   Text, //A React component for displaying text which supports nesting, styling, and touch handling. https://reactnative.dev/docs/text
 } from 'react-native';
 import React from 'react';
-import {Row} from './Row';
+// import {Row} from './Row';
 
 export const CalcButtons = ({updateCalculation}) => {
   return (
-    <View>
-      <Row>
-        <Button
-          onPress={() => updateCalculation('+')}
-          style={styles.button}
-          title="+"
-        />
-        <Button
-          onPress={() => updateCalculation('-')}
-          style={styles.button}
-          title="-"
-        />
-        <Button
-          onPress={() => updateCalculation('*')}
-          style={styles.button}
-          title="X"
-        />
+    <View style={styles.rowcontainer}>
+      <Pressable onPress={() => updateCalculation('+')} style={styles.button}>
+        <Text style={styles.text}>{'+'}</Text>
+      </Pressable>
 
-        <Button
-          onPress={() => updateCalculation('/')}
-          style={styles.button}
-          title="/"
-        />
-        <Button
-          onPress={() => updateCalculation('=')}
-          style={styles.button}
-          title="="
-        />
+      <Pressable onPress={() => updateCalculation('-')} style={styles.button}>
+        <Text style={styles.text}>{'-'}</Text>
+      </Pressable>
 
-        <Button
-          onPress={() => updateCalculation('clear')}
-          style={styles.button}
-          title="Clear"
-        />
-      </Row>
+      <Pressable onPress={() => updateCalculation('*')} style={styles.button}>
+        <Text style={styles.text}>{'X'}</Text>
+      </Pressable>
+
+      <Pressable onPress={() => updateCalculation('/')} style={styles.button}>
+        <Text style={styles.text}>{'/'}</Text>
+      </Pressable>
+
+      {/* <View style={{backgroundColor: 'blue', flex: 0.3}}>
+        <Text>Hello World!</Text>
+      </View> */}
     </View>
   );
 };
 
-// set dimmenstion
+// set dimensions
 const screen = Dimensions.get('window');
-const buttonWidth = screen.width / 4;
+const buttonWidth = screen.width / 3;
 
 const styles = StyleSheet.create({
-  Button: {
-    backgroundColor: '#333333',
+  button: {
     flex: 1,
-    height: Math.floor(buttonWidth - 50),
+    justifyContent: 'center',
+    // width: '25%',
+    borderWidth: 3,
+    borderColor: '#23e25c',
+    backgroundColor: '#f06464',
+
+    // height: Math.floor(buttonWidth - 150),
     alignItems: 'center',
-    justifyContent: 'stretch',
+    alignSelf: 'stretch',
     borderRadius: Math.floor(buttonWidth),
     margin: 5,
-    padding: 10,
   },
 
   text: {
-    color: 'red',
-    fontSize: 14,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
+  },
+
+  rowcontainer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignContent: 'flex-start',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
 });
