@@ -5,13 +5,13 @@ import {
 import React from 'react';
 import {PressableButton} from './AllButtons';
 
-export const DbButtons = (buttonOperation) => {
+export const DbButtons = (sqlOperation) => {
   return (
     <View style={styles.rowcontainer}>
-      <PressableButton onPress={buttonOperation} symbol="Display" />
-      <PressableButton onPress={buttonOperation} symbol="Add" />
-      <PressableButton onPress={buttonOperation} symbol="Delete" />
-      <PressableButton onPress={buttonOperation} symbol="Edit" />
+      <PressableButton onPress={sqlOperation} symbol="Display" />
+      <PressableButton onPress={sqlOperation} symbol="Add" />
+      <PressableButton onPress={sqlOperation} symbol="Delete" />
+      <PressableButton onPress={sqlOperation} symbol="Edit" />
     </View>
   );
 };

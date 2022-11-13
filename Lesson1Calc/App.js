@@ -6,7 +6,7 @@ import {
   Text, //Text is a React component for displaying text. https://reactnative.dev/docs/text
   View, //The most fundamental component for building a UI, View is a container that supports layout with flexbox, style, some touch handling, and accessibility controls. https://reactnative.dev/docs/view
   ImageBackground, //A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll. https://reactnative.dev/docs/imagebackground  https://www.sitereq.com/post/two-easy-ways-to-add-react-native-background-image
-  Image, //A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll. https://reactnative.dev/docs/image
+  FlatList, //A React component for rendering large lists of data. https://reactnative.dev/docs/flatlist
 } from 'react-native';
 import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
@@ -44,8 +44,8 @@ const App = () => {
       setCalculation(result);
     }
   };
-
-  const buttonOperation = value => {
+  //Database functions
+  const sqlOperation = value => {
     if (value === 'Display') {
       setDbDisplay(getDbAnswers);
     }
@@ -71,11 +71,14 @@ const App = () => {
               </Row>
               <NumberButtons updateCalculation={updateCalculation} />
               <Row>
-                <DbButtons updateCalculation={buttonOperation} />
+                <DbButtons sqlOperation={sqlOperation} />
               </Row>
-              
-
-              
+              <FlatList
+                data={DbDisplay}
+                renderItem={({item}) => (
+                  <Text style={styles.item}>{item.key}</Text>
+                )}
+              />
             </View>
           </ScrollView>
         </SafeAreaView>

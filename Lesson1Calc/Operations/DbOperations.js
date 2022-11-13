@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import SQLite from 'react-native-sqlite-storage';
 SQLite.DEBUG(false);
 SQLite.enablePromise(true);
-import {StyleSheet, View, Text} from 'react-native';
+//import {StyleSheet, View, Text} from 'react-native';
 //https://aboutreact.com/example-of-sqlite-database-in-react-native/
 
 //https://github.com/Shahid313/react-native-sqlite-storage/blob/main/screens/HomeScreen.js
@@ -23,8 +23,10 @@ const tableName = 'AllAnswers';
 const fieldName = 'answer';
 
 export const getDBConnection = async () => {
-  return SQLite.openDatabase({name: databaseName, location: 'default'}); // '~android/app/src/main/assets/'
+  return SQLite.openDatabase({name: databaseName, createFromLocation: 1}); // '~android/app/src/main/assets/'
 };
+
+
 
 // const selectDB = () => {
 //   SQLite.transaction(tx => {
@@ -51,6 +53,7 @@ export const getDBConnection = async () => {
 
 export const getDbAnswers = async () => {
   try {
+    getDBConnection();
     const allAnswers = [];
     const results = await SQLite.executeSql(`SELECT answer FROM ${tableName}`);
     results.forEach(result => {
@@ -60,18 +63,17 @@ export const getDbAnswers = async () => {
     });
     return allAnswers;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     throw Error('Failed to get allAnswers !!!');
   }
 };
 
-export const saveTodoItems = async () => {
-  const insertQuery =
-    `INSERT OR REPLACE INTO ${tableName}(rowid, value) values` +
-    todoItems.map(i => `(${i.id}, '${i.value}')`).join(',');
+// export const saveCalc = async (calc) => {
+//   const insertQuery =
+//     `INSERT OR REPLACE INTO ${tableName}(rowid, value) values` + calc;
 
-  return db.executeSql(insertQuery);
-};
+//   return SQLite.executeSql(insertQuery);
+// };
 
 //  export const updateDB = () => {
 //     db.transaction(tx => {
@@ -151,52 +153,52 @@ export const saveTodoItems = async () => {
 //   );
 // }
 
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 2,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // flexDirection: 'column',
-  },
+// const styles = StyleSheet.create({
+//   text: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//     margin: 2,
+//   },
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     // flexDirection: 'column',
+//   },
 
-  UpdateButton: {
-    width: 120,
-    height: 40,
-    borderRadius: 10,
-    backgroundColor: 'green',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5,
-  },
-  UpdateButtonText: {
-    color: '#fff',
-  },
-  DeleteButton: {
-    width: 120,
-    height: 40,
-    borderRadius: 10,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5,
-  },
-  DeleteButtonText: {
-    color: '#fff',
-  },
+//   UpdateButton: {
+//     width: 120,
+//     height: 40,
+//     borderRadius: 10,
+//     backgroundColor: 'green',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 5,
+//   },
+//   UpdateButtonText: {
+//     color: '#fff',
+//   },
+//   DeleteButton: {
+//     width: 120,
+//     height: 40,
+//     borderRadius: 10,
+//     backgroundColor: 'red',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 5,
+//   },
+//   DeleteButtonText: {
+//     color: '#fff',
+//   },
 
-  sectionContainer: {
-    marginTop: 10,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-});
+//   sectionContainer: {
+//     marginTop: 10,
+//     paddingHorizontal: 24,
+//   },
+//   sectionTitle: {
+//     fontSize: 24,
+//     fontWeight: '600',
+//     justifyContent: 'center',
+//     textAlign: 'center',
+//   },
+// });
