@@ -13,14 +13,16 @@ import {CalcButtons} from './Components/calcbuttons';
 import {Row} from './Components/Row';
 import {NumberButtons} from './Components/NumberButtons';
 import bgImage from './Assets/waterdrops.jpg';
+import {getDBConnection, getDbAnswers} from './Operations/DbOperations';
+import {DbButtons} from './Components/DbButtons';
 
 const BackGroundImage = {bgImage};
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
-  const [result, setResult] = useState('');
-  // const image ={ require('../assets/waterdrops.jpg')};
+  const [DbDisplay, setDbDisplay] = useState([]);
+
   const updateCalculation = value => {
     // alert('updateCalculation' + ' ' + value + ' ' + calculation);
     setCalculation(calculation + String(value)); //add the value to the growing string
@@ -43,6 +45,12 @@ const App = () => {
     }
   };
 
+  const buttonOperation = value => {
+    if (value === 'Display') {
+      setDbDisplay(getDbAnswers);
+    }
+  };
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -62,13 +70,12 @@ const App = () => {
                 <CalcButtons updateCalculation={updateCalculation} />
               </Row>
               <NumberButtons updateCalculation={updateCalculation} />
+              <Row>
+                <DbButtons updateCalculation={buttonOperation} />
+              </Row>
+              
 
-              <Image
-                style={styles.tinyLogo}
-                source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-              />
+              
             </View>
           </ScrollView>
         </SafeAreaView>
