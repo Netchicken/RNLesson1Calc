@@ -6,7 +6,7 @@ import {
   Text, //A React component for displaying text which supports nesting, styling, and touch handling. https://reactnative.dev/docs/text
 } from 'react-native';
 import React from 'react';
-import {PressableButton} from './Button';
+import {PressableButton} from './AllButtons';
 // import {Row} from './Row';
 
 export const CalcButtons = ({updateCalculation}) => {

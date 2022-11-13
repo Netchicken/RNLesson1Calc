@@ -19,6 +19,7 @@ const BackGroundImage = {bgImage};
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
+  const [result, setResult] = useState('');
   // const image ={ require('../assets/waterdrops.jpg')};
   const updateCalculation = value => {
     // alert('updateCalculation' + ' ' + value + ' ' + calculation);
@@ -26,8 +27,11 @@ const App = () => {
     console.log('updateCalculation all', calculation);
     //if you press = then evaluate the calculation
     if (value === '=') {
+      let calc = calculation;
       // eslint-disable-next-line no-new-func
-      setCalculation(new Function('return ' + calculation));
+      let answer = new Function('return ' + calc)();
+
+      setCalculation(calc + '=' + answer);
     }
     if (value === 'clear') {
       setCalculation('');
