@@ -6,11 +6,9 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
+
 } from 'react-native';
-//import GamePlay from './GamePlay';
+//https://aboutreact.com/example-of-sqlite-database-in-react-native/
 
 //https://github.com/Shahid313/react-native-sqlite-storage/blob/main/screens/HomeScreen.js
 
@@ -27,31 +25,18 @@ import {
 
 const db = SQLite.openDatabase(
   {
-    name: 'Store.db',
+    name: 'calcDB.db',
     createFromLocation: 1, //'~android/app/src/main/assets/www',
   },
   () => {
-    console.log('Operations DB open exists', 'success');
+    console.log('calcDB DB open exists', 'success');
   },
   error => {
-    console.log('Operations DB open error', error);
+    console.log('calcDB DB open error', error);
   },
 );
 
-export default function Operations({navigation, route}) {
-  const [cities, setCities] = useState([]);
-  const [updateCity, setUpdateCity] = useState('');
-
-  useEffect(() => {
-    // console.log('Operations Useffect', 'success');
-    // createTable();
-    // selectDataHandler();
-  }, []);
-
-  const showToastWithGravity = msg => {
-    ToastAndroid.showWithGravity(msg, ToastAndroid.LONG, ToastAndroid.CENTER);
-  };
-
+ 
   const createTable = () => {
     db.transaction(tx => {
       tx.executeSql(

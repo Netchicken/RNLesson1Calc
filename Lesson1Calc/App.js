@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
 
   container: {
     fontSize: 40,
+    flex: 1,
   },
 
   containerText: {
@@ -125,17 +126,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   sectionTitle: {
+    color: 'white',
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  // sectionDescription: {
+  //   marginTop: 8,
+  //   fontSize: 18,
+  //   fontWeight: '400',
+  // },
+  // highlight: {
+  //   fontWeight: '700',
+  // },
 });
 
 export default App;

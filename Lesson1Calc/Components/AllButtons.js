@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderColor: '#64dded',
     backgroundColor: '#ffffff',
     flex: 1,
-    height: Math.floor(buttonWidth - 50),
+    height: Math.floor(buttonWidth - 55),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: Math.floor(buttonWidth),

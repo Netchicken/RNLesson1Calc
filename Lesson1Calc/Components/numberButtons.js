@@ -80,15 +80,6 @@ export const NumberButtons = ({updateCalculation}) => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    borderWidth: 3,
-    borderRadius: 50,
-    borderColor: '#64dded',
-    backgroundColor: '#ffffff',
-    width: 50,
-    height: 50,
-  },
-
   rowcontainer: {
     flexDirection: 'row',
     alignContent: 'flex-start',
