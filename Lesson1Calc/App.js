@@ -13,7 +13,11 @@ import {CalcButtons} from './Components/calcbuttons';
 import {Row} from './Components/Row';
 import {NumberButtons} from './Components/NumberButtons';
 import bgImage from './Assets/waterdrops.jpg';
-import {getDBConnection, getDbAnswers} from './Operations/DbOperations';
+import {
+  getDBConnection,
+  getDbAnswers,
+  getdata,
+} from './Operations/DbOperations';
 import {DbButtons} from './Components/DbButtons';
 
 const BackGroundImage = {bgImage};
@@ -48,7 +52,7 @@ const App = () => {
   const sqlOperation = value => {
     console.log('sqlOperation ', value);
     if (value === 'Display') {
-      setDbDisplay(getDbAnswers);
+      setDbDisplay(getdata);
     }
   };
 
