@@ -1,5 +1,5 @@
 import React from 'react';
-import SQLite from 'react-native-sqlite-storage';
+import SQLite from 'react-native-sqlite-2';
 SQLite.DEBUG(false);
 SQLite.enablePromise(true);
 //import {StyleSheet, View, Text} from 'react-native';
@@ -21,12 +21,12 @@ SQLite.enablePromise(true);
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
+const db = SQLite.openDatabase(databaseName, '1.0', '', 1);
 
-export const getDBConnection = async () => {
-  return SQLite.openDatabase({name: databaseName, createFromLocation: 1}); // '~android/app/src/main/assets/'
-};
+// export const getDBConnection = async () => {
 
-
+//   return SQLite.openDatabase({name: databaseName, createFromLocation: 1}); // '~android/app/src/main/assets/'
+// };
 
 // const selectDB = () => {
 //   SQLite.transaction(tx => {
@@ -53,9 +53,9 @@ export const getDBConnection = async () => {
 
 export const getDbAnswers = async () => {
   try {
-    getDBConnection();
+    // getDBConnection();
     const allAnswers = [];
-    const results = await SQLite.executeSql(`SELECT answer FROM ${tableName}`);
+    const results = await db.executeSql(`SELECT * FROM ${tableName}`);
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         allAnswers.push(result.rows.item(index));

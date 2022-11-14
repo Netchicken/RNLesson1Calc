@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "18.1.0",
-    "react-native": "0.70.4"
+    "react-native": "0.70.4",
+    "react-native-sqlite-2": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
