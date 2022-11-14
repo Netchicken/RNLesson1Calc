@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import {PressableButton} from './AllButtons';
-// import {Row} from './Row';
 
 export const CalcButtons = ({updateCalculation}) => {
   return (

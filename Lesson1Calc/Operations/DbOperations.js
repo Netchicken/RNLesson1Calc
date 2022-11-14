@@ -1,6 +1,6 @@
 //import React, {useEffect} from 'react';
 import SQLite from 'react-native-sqlite-2';
-import SQLiteStorage from 'react-native-sqlite-storage';
+//import SQLiteStorage from 'react-native-sqlite-storage';
 //https://www.npmjs.com/package/react-native-sqlite-2
 //https://github.com/craftzdog/react-native-sqlite-2#readme
 //import {StyleSheet, View, Text} from 'react-native';
@@ -22,76 +22,104 @@ import SQLiteStorage from 'react-native-sqlite-storage';
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
-let db = SQLiteStorage.openDatabase(
-  {
-    name: 'MainDB',
-    location: 'default',
-  },
-  () => {},
-  error => {
-    createTable();
-    console.log(error);
-  },
-);
 
-const createTable = () => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'CREATE TABLE IF NOT EXISTS ' +
-        'Answers ' +
-        '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT);',
+// const openDatabase = () => {
+//   const db = SQLite.openDatabase(
+//     {
+//       name: 'CalcDB',
+//       location: 'default',
+//     },
+//     () => {},
+//     error => {
+//       console.log(error);
+//     },
+//   );
+// };
+
+// const createTable = () => {
+//   db.transaction(tx => {
+//     tx.executeSql(
+//       'CREATE TABLE IF NOT EXISTS ' +
+//         'Answers ' +
+//         '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT);',
+//     );
+//   });
+// };
+// //https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/blob/RN-Tutorial-25/src/screens/Login.js
+// export const getdata = () => {
+//   try {
+//     let allAnswers = [];
+//     db.transaction(tx => {
+//       tx.executeSql('SELECT * FROM AllAnswers', [], (_tx, results) => {
+//         var len = results.rows.length;
+//         if (len > 0) {
+//           results.forEach(result => {
+//             for (let index = 0; index < len; index++) {
+//               allAnswers.push(result.rows.item(index).Answer);
+//             }
+//           });
+//         }
+//       });
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+//https://github.com/craftzdog/react-native-sqlite-2#readme 
+export const getDbAnswers = calculation => {
+  const db = SQLite.openDatabase(databaseName, '1.0', '', 1);
+  console.log('getDbAnswers db', db);
+  let allAnswers = [];
+  db.transaction(function (txn) {
+    txn.executeSql('DROP TABLE IF EXISTS AllAnswers', []);
+    txn.executeSql(
+      'CREATE TABLE IF NOT EXISTS Answers(user_id INTEGER PRIMARY KEY NOT NULL, answer VARCHAR(30))',
+      [],
     );
+    txn.executeSql('INSERT INTO Answers (answer) VALUES (:answer)', [
+      calculation,
+    ]);
+    txn.executeSql('INSERT INTO Answers (answer) VALUES (:answer)', [
+      '2*2=456',
+    ]);
+    txn.executeSql('SELECT * FROM `Answers`', [], function (tx, res) {
+      for (let i = 0; i < res.rows.length; ++i) {
+        console.log('item:', res.rows.item(i));
+        allAnswers.push(res.rows.item(i));
+      }
+    });
+    return allAnswers;
   });
-};
-//https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/blob/RN-Tutorial-25/src/screens/Login.js
-export const getdata = () => {
-  try {
-    let allAnswers = [];
-    db.transaction(tx => {
-      tx.executeSql('SELECT * FROM Answers', [], (_tx, results) => {
-        var len = results.rows.length;
-        if (len > 0) {
-          results.forEach(result => {
-            for (let index = 0; index < len; index++) {
-              allAnswers.push(result.rows.item(index).Answer);
-            }
-          });
-        }
-      });
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getDbAnswers = () => {
-  const db = SQLite.openDatabase(
-    {name: databaseName, location: 'default'},
-    () => {},
-    error => {
-      console.log(error);
-    },
-  );
-  console.log('getDbAnswers db name ', db.databaseName);
-
-  try {
-    let allAnswers = [];
-    db.transaction(function (txn) {
-      txn.executeSql('SELECT * FROM AllAnswers', [], function (tx, res) {
-        for (let i = 0; i < res.rows.length; ++i) {
-          console.log('item:', res.rows.item(i));
-        }
-      });
-      console.log('getDbAnswers', allAnswers);
-      return allAnswers;
-    });
-  } catch (error) {
-    console.log(error);
-    throw Error('Failed to get allAnswers !!!');
-  }
 };
 
 //=============
+
+//   createTable();
+//   const db = SQLite.openDatabase(
+//     {name: databaseName, location: 'default'},
+//     () => {},
+//     error => {
+//       console.log(error);
+//     },
+//   );
+//   console.log('getDbAnswers db name ', db.databaseName);
+
+//   try {
+//     let allAnswers = [];
+//     db.transaction(function (txn) {
+//       txn.executeSql('SELECT * FROM AllAnswers', [], function (tx, res) {
+//         for (let i = 0; i < res.rows.length; ++i) {
+//           console.log('item:', res.rows.item(i));
+//         }
+//       });
+//       console.log('getDbAnswers', allAnswers);
+//       return allAnswers;
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     throw Error('Failed to get allAnswers !!!');
+//   }
+// };
 // const results = txn.executeSql(`SELECT * FROM ${tableName}`);
 // results.forEach(result => {
 //   for (let index = 0; index < result.rows.length; index++) {
