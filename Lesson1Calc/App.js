@@ -46,6 +46,7 @@ const App = () => {
   };
   //Database functions
   const sqlOperation = value => {
+    console.log('sqlOperation ', value);
     if (value === 'Display') {
       setDbDisplay(getDbAnswers);
     }
@@ -73,14 +74,14 @@ const App = () => {
               <Row>
                 <DbButtons sqlOperation={sqlOperation} />
               </Row>
-              <FlatList
-                data={DbDisplay}
-                renderItem={({item}) => (
-                  <Text style={styles.item}>{item.key}</Text>
-                )}
-              />
             </View>
           </ScrollView>
+          <FlatList
+            data={DbDisplay}
+            renderItem={({item}) => (
+              <Text style={styles.item}>{item.value}</Text>
+            )}
+          />
         </SafeAreaView>
       </View>
     </ImageBackground>

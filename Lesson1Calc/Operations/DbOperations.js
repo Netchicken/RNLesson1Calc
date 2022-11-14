@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SQLite from 'react-native-sqlite-2';
-SQLite.DEBUG(false);
-SQLite.enablePromise(true);
+//https://www.npmjs.com/package/react-native-sqlite-2
+//https://github.com/craftzdog/react-native-sqlite-2#readme
 //import {StyleSheet, View, Text} from 'react-native';
 //https://aboutreact.com/example-of-sqlite-database-in-react-native/
 
@@ -21,8 +21,35 @@ SQLite.enablePromise(true);
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
-const db = SQLite.openDatabase(databaseName, '1.0', '', 1);
 
+export const getDbAnswers = () => {
+  const db = SQLite.openDatabase({name: databaseName});
+  console.log('getDbAnswers db name ', db.databaseName);
+
+  try {
+    const allAnswers = [];
+    db.transaction(function (txn) {
+      txn.executeSql('SELECT * FROM AllAnswers', [], function (tx, res) {
+        for (let i = 0; i < res.rows.length; ++i) {
+          console.log('item:', res.rows.item(i));
+        }
+      });
+      console.log('getDbAnswers', allAnswers);
+      return allAnswers;
+    });
+  } catch (error) {
+    console.log(error);
+    throw Error('Failed to get allAnswers !!!');
+  }
+};
+
+//=============
+// const results = txn.executeSql(`SELECT * FROM ${tableName}`);
+// results.forEach(result => {
+//   for (let index = 0; index < result.rows.length; index++) {
+//     allAnswers.push(result.rows.item(index));
+//   }
+// });
 // export const getDBConnection = async () => {
 
 //   return SQLite.openDatabase({name: databaseName, createFromLocation: 1}); // '~android/app/src/main/assets/'
@@ -50,23 +77,6 @@ const db = SQLite.openDatabase(databaseName, '1.0', '', 1);
 //     });
 //   });
 // };
-
-export const getDbAnswers = async () => {
-  try {
-    // getDBConnection();
-    const allAnswers = [];
-    const results = await db.executeSql(`SELECT * FROM ${tableName}`);
-    results.forEach(result => {
-      for (let index = 0; index < result.rows.length; index++) {
-        allAnswers.push(result.rows.item(index));
-      }
-    });
-    return allAnswers;
-  } catch (error) {
-    console.log(error);
-    throw Error('Failed to get allAnswers !!!');
-  }
-};
 
 // export const saveCalc = async (calc) => {
 //   const insertQuery =
