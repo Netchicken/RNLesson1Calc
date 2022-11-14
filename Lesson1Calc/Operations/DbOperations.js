@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import SQLite from 'react-native-sqlite-2';
+import SQLiteStorage from 'react-native-sqlite-storage';
 //https://www.npmjs.com/package/react-native-sqlite-2
 //https://github.com/craftzdog/react-native-sqlite-2#readme
 //import {StyleSheet, View, Text} from 'react-native';
@@ -21,9 +22,60 @@ import SQLite from 'react-native-sqlite-2';
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
+const db = SQLiteStorage.openDatabase(
+    {
+        name: 'MainDB',
+        location: 'default',
+    },
+    () => { },
+  error => {
+     createTable();
+    console.log(error)
+  }
+);
+
+ const createTable = () => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                "CREATE TABLE IF NOT EXISTS "
+                + "Answers "
+                + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT);"
+            )
+        })
+    }
+//https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/blob/RN-Tutorial-25/src/screens/Login.js
+export const getdata = () => {
+  try {
+      db.transaction((tx) => {
+                tx.executeSql(
+                    "SELECT * FROM Answers",
+                    [],
+                    (tx, results) => {
+                        var len = results.rows.length;
+                        if (len > 0) {
+                            results.forEach(result => {
+  for (let index = 0; index < len; index++) {
+     allAnswers.push(result.rows.item(index).Answer);
+  } });
+                        }
+                    }
+                )
+            })
+        } catch (error) {
+            console.log(error);
+        }
+
+
+})
 
 export const getDbAnswers = () => {
-  const db = SQLite.openDatabase({name: databaseName});
+  const db = SQLite.openDatabase(
+    {name: databaseName, location: 'default'},
+    () => {},
+    error => {
+      console.log(error);
+    },
+  );
   console.log('getDbAnswers db name ', db.databaseName);
 
   try {
