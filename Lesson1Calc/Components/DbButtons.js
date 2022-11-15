@@ -4,8 +4,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import {PressableButton} from './AllButtons';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-const Stack = createNativeStackNavigator();
 
 export const DbButtons = ({sqlOperation}) => {
   return (

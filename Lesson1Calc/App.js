@@ -8,19 +8,29 @@ import {
   FlatList,
 } from 'react-native';
 import {React, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {CalcButtons} from './Components/calcbuttons';
 import {NumberButtons} from './Components/NumberButtons';
 import {DbButtons} from './Components/DbButtons';
-import {PassData} from './Operations/DbOperations';
+import {GetDb, PassData} from './Operations/DbOperations';
 
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
 
-const Stack = createNativeStackNavigator();
-
-const App = ({navigation}) => {
+const App = () => {
   const [calculation, setCalculation] = useState('');
+  let DbDisplay = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      answer: 'First Item',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      answer: 'Second Item',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      answer: 'Third Item',
+    },
+  ];
 
   const updateCalculation = value => {
     // alert('updateCalculation' + ' ' + value + ' ' + calculation);
@@ -48,40 +58,43 @@ const App = ({navigation}) => {
   const sqlOperation = value => {
     console.log('App sqlOperation ', value);
     // let result = [];
-    if (value === 'Add') {
-      PassData(value);
-    }
     if (value === 'Display') {
       PassData(value);
-      navigation.navigate('DbOperations');
     }
+    //console.log('App sqlOperation ', JSON.stringify(res));
+
+    // DbDisplay = [result];
+
+    // DbDisplay.map((item, index) => {
+    //   console.log('App DbDisplay ', item.answer);
+    // });
+    // }
   };
 
   return (
-    <NavigationContainer>
-      <ImageBackground
-        resizeMode="cover"
-        source={require('./Assets/waterdrops.jpg')}
-        style={styles.image}>
-        <View style={styles.container}>
-          <SafeAreaView>
-            <ScrollView>
-              <View>
-                <Text style={styles.sectionTitle}>Simple Calculator</Text>
-                <View style={styles.calcBox}>
-                  <Text style={styles.outputText}>
-                    {calculation || 'Enter a number'}
-                  </Text>
-                </View>
-                <CalcButtons updateCalculation={updateCalculation} />
-                <NumberButtons updateCalculation={updateCalculation} />
-                <DbButtons sqlOperation={sqlOperation} />
+    <ImageBackground
+      resizeMode="cover"
+      source={require('./Assets/waterdrops.jpg')}
+      style={styles.image}>
+      <View style={styles.container}>
+        <SafeAreaView>
+          <ScrollView>
+            <View>
+              <Text style={styles.sectionTitle}>Simple Calculator</Text>
+              <View style={styles.calcBox}>
+                <Text style={styles.outputText}>
+                  {calculation || 'Enter a number'}
+                </Text>
               </View>
-            </ScrollView>
-          </SafeAreaView>
-        </View>
-      </ImageBackground>
-    </NavigationContainer>
+              <CalcButtons updateCalculation={updateCalculation} />
+              <NumberButtons updateCalculation={updateCalculation} />
+              <DbButtons sqlOperation={sqlOperation} />
+              <GetDb />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 };
 

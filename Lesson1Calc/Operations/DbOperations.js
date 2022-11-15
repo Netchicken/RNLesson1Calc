@@ -15,11 +15,7 @@ import {
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
-const db = SQLite.openDatabase({
-  name: 'calcDB',
-  location: 'default',
-  createFromLocation: '~calcDB.db',
-});
+let db;
 const listAnswers = [];
 let singleAnswer = '';
 //https://medium.com/infinitbility/react-native-sqlite-storage-422503634dd2
@@ -28,23 +24,14 @@ let singleAnswer = '';
 
 export const PassData = ({data}) => {
   singleAnswer = data;
-
-  if (singleAnswer !== '') {
-    db.transaction(txn => {
-      txn.executeSql(
-        'INSERT INTO AllAnswers (answer) VALUES ( "' + singleAnswer + '")',
-        [],
-      );
-    });
-  }
 };
 
 export const GetDb = () => {
-  // db = SQLite.openDatabase({
-  //   name: 'calcDB',
-  //   location: 'default',
-  //   createFromLocation: '~calcDB.db',
-  // });
+  db = SQLite.openDatabase({
+    name: 'calcDB',
+    location: 'default',
+    createFromLocation: '~calcDB.db',
+  });
   console.log(
     'getDb Answers db',
     JSON.stringify(db) + ' ' + JSON.stringify(singleAnswer),
@@ -72,6 +59,12 @@ export const GetDb = () => {
       },
     );
 
+    if (singleAnswer !== '') {
+      txn.executeSql(
+        'INSERT INTO AllAnswers (answer) VALUES ( "' + singleAnswer + '")',
+        [],
+      );
+    }
     //  txn.executeSql('INSERT INTO AllAnswers (answer) VALUES ("222*2=456")', []);
 
     txn.executeSql('SELECT answer FROM AllAnswers', [], function (tx, result) {
@@ -89,6 +82,21 @@ export const GetDb = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* <Section
+        style={styles.sectionTitle}
+        title="View calculations in the Database"></Section> */}
+
+      {/* <TouchableOpacity
+        // onPress={() => selectDataHandler()}
+        style={styles.UpdateButton}>
+        <Text style={styles.UpdateButtonText}>Show Cities</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        // onPress={() => removeDataHandler()}
+        style={styles.DeleteButton}>
+        <Text style={styles.DeleteButtonText}>Delete All Cities</Text>
+      </TouchableOpacity> */}
+
       <ScrollView>
         {listAnswers.map((item, index) => {
           return (
