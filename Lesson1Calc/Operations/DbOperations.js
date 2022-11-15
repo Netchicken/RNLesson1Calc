@@ -1,349 +1,169 @@
-//import React, {useEffect} from 'react';
+import {React, useState} from 'react';
 import SQLite from 'react-native-sqlite-2';
+import {
+  StyleSheet, // CSS-like styles
+  Text, // Renders text
+  TouchableOpacity, // Handles row presses
+  SafeAreaView,
+  ScrollView,
+  View,
+  Section,
+} from 'react-native';
 //import SQLiteStorage from 'react-native-sqlite-storage';
 //https://www.npmjs.com/package/react-native-sqlite-2
-//https://github.com/craftzdog/react-native-sqlite-2#readme
-//import {StyleSheet, View, Text} from 'react-native';
-//https://aboutreact.com/example-of-sqlite-database-in-react-native/
-
-//https://github.com/Shahid313/react-native-sqlite-storage/blob/main/screens/HomeScreen.js
-
-//https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/blob/RN-Tutorial-18/src/ScreenB.js
-
-//https://www.youtube.com/watch?v=ANdSdIlgsEw  database creation
-//github.com/mahdi-sharifimehr/RN-Tutorial-Main/tree/RN-Tutorial-25 database creation
-
-//https://dev-yakuza.posstree.com/en/react-native/react-native-sqlite-storage/
-//execute the command below to bind react-native-sqlite-storage to RN(React Native) project.
-
-//react-native link react-native-sqlite-storage
-//https://github.com/react-native-community/cli/blob/master/docs/autolinking.md
 
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
 let db;
+const listAnswers = [];
+let singleAnswer = '';
 //https://medium.com/infinitbility/react-native-sqlite-storage-422503634dd2
 
 //https://github.com/craftzdog/react-native-sqlite-2#readme
-export const getDb = calculation => {
+
+export const PassData = ({data}) => {
+  singleAnswer = data;
+};
+
+export const GetDb = () => {
   db = SQLite.openDatabase({
     name: 'calcDB',
     location: 'default',
     createFromLocation: '~calcDB.db',
   });
   console.log(
-    'getDb openDB db',
-    JSON.stringify(db.name) + ' ' + JSON.stringify(db.createFromLocation),
-  );
-  console.log(
     'getDb Answers db',
-    JSON.stringify(db) + ' ' + JSON.stringify(calculation),
+    JSON.stringify(db) + ' ' + JSON.stringify(singleAnswer),
   );
-  let allAnswers = [];
 
-  const createString2 =
-    'CREATE TABLE "AllAnswers" ("Id"	INTEGER NOT NULL UNIQUE,	"answer"	TEXT,	PRIMARY KEY("Id" AUTOINCREMENT))';
+  let params = [];
+  // const createString2 =
+  //   'CREATE TABLE "AllAnswers" ("Id"	INTEGER NOT NULL UNIQUE,	"answer"	TEXT,	PRIMARY KEY("Id" AUTOINCREMENT))';
   const createString =
     'CREATE TABLE IF NOT EXISTS AllAnswers(Id INTEGER PRIMARY KEY NOT NULL, TEXT,	PRIMARY KEY("Id" AUTOINCREMENT))';
-  let params = [];
-  console.log('createString', createString);
+
+  //console.log('createString', createString);
 
   db.transaction(txn => {
     txn.executeSql(
       createString,
       params,
       (trans, results) => {
-        console.log('execute success results: ' + JSON.stringify(results));
-        console.log('execute success transaction: ' + JSON.stringify(trans));
-        //resolve(results);
-        //resolve(trans);
+        //  console.log('execute success results: ' + JSON.stringify(results));
+        //  console.log('execute success transaction: ' + JSON.stringify(trans));
       },
       error => {
         console.log('execute error: ' + JSON.stringify(error));
         // reject(error);
       },
     );
-    txn.executeSql(
-      'INSERT INTO AllAnswers (answer) VALUES ( "' + calculation + '")',
-      [],
-    );
 
-    txn.executeSql('INSERT INTO AllAnswers (answer) VALUES ("222*2=456")', []);
+    if (singleAnswer !== '') {
+      txn.executeSql(
+        'INSERT INTO AllAnswers (answer) VALUES ( "' + singleAnswer + '")',
+        [],
+      );
+    }
+    //  txn.executeSql('INSERT INTO AllAnswers (answer) VALUES ("222*2=456")', []);
 
-    txn.executeSql('SELECT answer FROM AllAnswers', [], function (tx, res) {
-      for (let i = 0; i < res.rows.length; ++i) {
-        console.log('each item:', res.rows.item(i));
-        allAnswers.push(res.rows.item(i));
+    txn.executeSql('SELECT answer FROM AllAnswers', [], function (tx, result) {
+      for (let i = 0; i < result.rows.length; ++i) {
+        var data = result.rows.item(i);
+        listAnswers.push(data); //add data to the list
+        console.log('DbOp each item:', data);
       }
+      //check if its there
+      listAnswers.map(item => {
+        console.log('DbOp listAnswers', item);
+      });
     });
-    return allAnswers;
   });
-  //==================================================================================================
-  db.transaction(txn => {
-    txn.executeSql(
-      'INSERT INTO AllAnswers (answer) VALUES (' + calculation + ')',
-      [],
-    );
 
-    txn.executeSql('INSERT INTO AllAnswers (answer) VALUES (2*2=456)', []);
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* <Section
+        style={styles.sectionTitle}
+        title="View calculations in the Database"></Section> */}
 
-    txn.executeSql(
-      "SELECT answer FROM sqlite_master WHERE type='table' AND name='AllAnswers'",
-      [],
-      function (tx, res) {
-        for (let i = 0; i < res.rows.length; ++i) {
-          console.log('sqlite_master:', res.rows.item(i));
-          allAnswers.push(res.rows.item(i));
-        }
-      },
-    );
-    //txn.executeSql('DROP TABLE IF EXISTS AllAnswers', []);
+      {/* <TouchableOpacity
+        // onPress={() => selectDataHandler()}
+        style={styles.UpdateButton}>
+        <Text style={styles.UpdateButtonText}>Show Cities</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        // onPress={() => removeDataHandler()}
+        style={styles.DeleteButton}>
+        <Text style={styles.DeleteButtonText}>Delete All Cities</Text>
+      </TouchableOpacity> */}
 
-    txn.executeSql('SELECT * FROM `Answers`', [], function (tx, res) {
-      for (let i = 0; i < res.rows.length; ++i) {
-        console.log('item:', res.rows.item(i));
-        allAnswers.push(res.rows.item(i));
-      }
-    });
-    return allAnswers;
-  });
+      <ScrollView>
+        {listAnswers.map((item, index) => {
+          return (
+            <View>
+              <Text key={index} style={styles.text}>
+                {item}
+              </Text>
+            </View>
+          );
+        })}
+      </ScrollView>
+    </SafeAreaView>
+  );
 };
 
-//=============
-// const openDatabase = () => {
-//   const db = SQLite.openDatabase(
-//     {
-//       name: 'CalcDB',
-//       location: 'default',
-//     },
-//     () => {},
-//     error => {
-//       console.log(error);
-//     },
-//   );
-// };
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 2,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // flexDirection: 'column',
+  },
 
-// const createTable = () => {
-//   db.transaction(tx => {
-//     tx.executeSql(
-//       'CREATE TABLE IF NOT EXISTS ' +
-//         'Answers ' +
-//         '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT);',
-//     );
-//   });
-// };
-// //https://github.com/mahdi-sharifimehr/RN-Tutorial-Main/blob/RN-Tutorial-25/src/screens/Login.js
-// export const getdata = () => {
-//   try {
-//     let allAnswers = [];
-//     db.transaction(tx => {
-//       tx.executeSql('SELECT * FROM AllAnswers', [], (_tx, results) => {
-//         var len = results.rows.length;
-//         if (len > 0) {
-//           results.forEach(result => {
-//             for (let index = 0; index < len; index++) {
-//               allAnswers.push(result.rows.item(index).Answer);
-//             }
-//           });
-//         }
-//       });
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-//   createTable();
-//   const db = SQLite.openDatabase(
-//     {name: databaseName, location: 'default'},
-//     () => {},
-//     error => {
-//       console.log(error);
-//     },
-//   );
-//   console.log('getDbAnswers db name ', db.databaseName);
+  UpdateButton: {
+    width: 120,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: 'green',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+  },
+  UpdateButtonText: {
+    color: '#fff',
+  },
+  DeleteButton: {
+    width: 120,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+  },
+  DeleteButtonText: {
+    color: '#fff',
+  },
 
-//   try {
-//     let allAnswers = [];
-//     db.transaction(function (txn) {
-//       txn.executeSql('SELECT * FROM AllAnswers', [], function (tx, res) {
-//         for (let i = 0; i < res.rows.length; ++i) {
-//           console.log('item:', res.rows.item(i));
-//         }
-//       });
-//       console.log('getDbAnswers', allAnswers);
-//       return allAnswers;
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     throw Error('Failed to get allAnswers !!!');
-//   }
-// };
-// const results = txn.executeSql(`SELECT * FROM ${tableName}`);
-// results.forEach(result => {
-//   for (let index = 0; index < result.rows.length; index++) {
-//     allAnswers.push(result.rows.item(index));
-//   }
-// });
-// export const getDBConnection = async () => {
+  sectionContainer: {
+    marginTop: 10,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+});
 
-//   return SQLite.openDatabase({name: databaseName, createFromLocation: 1}); // '~android/app/src/main/assets/'
-// };
-
-// const selectDB = () => {
-//   SQLite.transaction(tx => {
-//     tx.executeSql('SELECT answer FROM AllAnswers', [], (tx, results) => {
-//       var len = results.rows.length;
-//       console.log('Operations selectDataHandler len', len);
-
-//       setCities([]); //empty state
-//       for (let i = 0; i < len; i++) {
-//         console.log(
-//           'Operations selectDataHandler results',
-//           results.rows.item(i).City,
-//         );
-//         //get the city
-//         var city = results.rows.item(i).City;
-//         //spread the hook, add in the new city
-//         setCities(cities => {
-//           return [...cities, city];
-//         });
-//       }
-//     });
-//   });
-// };
-
-// export const saveCalc = async (calc) => {
-//   const insertQuery =
-//     `INSERT OR REPLACE INTO ${tableName}(rowid, value) values` + calc;
-
-//   return SQLite.executeSql(insertQuery);
-// };
-
-//  export const updateDB = () => {
-//     db.transaction(tx => {
-//       tx.executeSql(
-//         'UPDATE Users SET City = ?',
-//         [updateCity],
-//         () => {
-//           Alert.alert('Success!', 'The update was succesful');
-//         },
-//         error => {
-//           console.log(error);
-//         },
-//       );
-//     });
-//   };
-
-//   const removeDB = () => {
-//     const db = SQLite.openDatabase(
-//       {
-//         name: 'Store.db',
-//         createFromLocation: 1, // '~android/app/src/main/assets/',
-//       },
-//       () => {
-//         console.log('removeDataHandler DB open exists', 'success');
-//       },
-//       error => {
-//         console.log('removeDataHandler DB open error', error);
-//       },
-//     );
-
-//     console.log('Operations removeData', 'trigger');
-//     db.transaction(tx => {
-//       tx.executeSql(
-//         'DELETE FROM Users',
-//         [],
-//         () => {
-//           setCities([]); //empty state
-//           showToastWithGravity('Success! All Cities have been deleted');
-//           console.log('Success!', 'All Cities have been deleted');
-//         },
-//         error => {
-//           console.log(error);
-//         },
-//       );
-//     });
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <Section
-//         style={styles.sectionTitle}
-//         title="View and Delete cities in the Database"></Section>
-
-//       <TouchableOpacity
-//         onPress={() => selectDataHandler()}
-//         style={styles.UpdateButton}>
-//         <Text style={styles.UpdateButtonText}>Show Cities</Text>
-//       </TouchableOpacity>
-//       <TouchableOpacity
-//         onPress={() => removeDataHandler()}
-//         style={styles.DeleteButton}>
-//         <Text style={styles.DeleteButtonText}>Delete All Cities</Text>
-//       </TouchableOpacity>
-
-//       <ScrollView>
-//         {cities.map((item, index) => {
-//           return (
-//             <View>
-//               <Text key={index} style={styles.text}>
-//                 {item}
-//               </Text>
-//             </View>
-//           );
-//         })}
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   text: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     margin: 2,
-//   },
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     // flexDirection: 'column',
-//   },
-
-//   UpdateButton: {
-//     width: 120,
-//     height: 40,
-//     borderRadius: 10,
-//     backgroundColor: 'green',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     margin: 5,
-//   },
-//   UpdateButtonText: {
-//     color: '#fff',
-//   },
-//   DeleteButton: {
-//     width: 120,
-//     height: 40,
-//     borderRadius: 10,
-//     backgroundColor: 'red',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     margin: 5,
-//   },
-//   DeleteButtonText: {
-//     color: '#fff',
-//   },
-
-//   sectionContainer: {
-//     marginTop: 10,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//     justifyContent: 'center',
-//     textAlign: 'center',
-//   },
-// });
+//  <FlatList
+//    data={DbDisplay}
+//    style={styles.liContainer}
+//    renderItem={({item}) => <Text style={styles.liText}>{item.answer}</Text>}
+//  />;

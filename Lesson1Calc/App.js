@@ -11,13 +11,26 @@ import {React, useState} from 'react';
 import {CalcButtons} from './Components/calcbuttons';
 import {NumberButtons} from './Components/NumberButtons';
 import {DbButtons} from './Components/DbButtons';
-import {getDb, openDB} from './Operations/DbOperations';
+import {GetDb, PassData} from './Operations/DbOperations';
 
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
 
 const App = () => {
   const [calculation, setCalculation] = useState('');
-  const [DbDisplay, setDbDisplay] = useState([]);
+  let DbDisplay = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      answer: 'First Item',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      answer: 'Second Item',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      answer: 'Third Item',
+    },
+  ];
 
   const updateCalculation = value => {
     // alert('updateCalculation' + ' ' + value + ' ' + calculation);
@@ -41,14 +54,21 @@ const App = () => {
     }
   };
   //Database functions
+  //value = the new answer to be added to the database
   const sqlOperation = value => {
-    console.log('App sqlOperation ', value + ' ' + calculation);
-
+    console.log('App sqlOperation ', value);
+    // let result = [];
     if (value === 'Display') {
-      let res = getDb(calculation);
-      console.log('App sqlOperation ', res);
-      setDbDisplay(res);
+      PassData(value);
     }
+    //console.log('App sqlOperation ', JSON.stringify(res));
+
+    // DbDisplay = [result];
+
+    // DbDisplay.map((item, index) => {
+    //   console.log('App DbDisplay ', item.answer);
+    // });
+    // }
   };
 
   return (
@@ -69,14 +89,9 @@ const App = () => {
               <CalcButtons updateCalculation={updateCalculation} />
               <NumberButtons updateCalculation={updateCalculation} />
               <DbButtons sqlOperation={sqlOperation} />
+              <GetDb />
             </View>
           </ScrollView>
-          <FlatList
-            data={DbDisplay}
-            renderItem={({item}) => (
-              <Text style={styles.item}>{item.value}</Text>
-            )}
-          />
         </SafeAreaView>
       </View>
     </ImageBackground>
@@ -84,6 +99,19 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  liContainer: {
+    backgroundColor: '#fff',
+    flex: 1,
+    paddingLeft: 5,
+  },
+
+  liText: {
+    color: '#333',
+    fontSize: 17,
+    fontWeight: '400',
+    // marginBottom: -3.5,
+    // marginTop: -3.5,
+  },
   image: {
     flex: 1,
     justifyContent: 'center',
