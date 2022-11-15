@@ -22,7 +22,95 @@ import SQLite from 'react-native-sqlite-2';
 const databaseName = 'calcDB.db';
 const tableName = 'AllAnswers';
 const fieldName = 'answer';
+let db;
+//https://medium.com/infinitbility/react-native-sqlite-storage-422503634dd2
 
+//https://github.com/craftzdog/react-native-sqlite-2#readme
+export const getDb = calculation => {
+  db = SQLite.openDatabase({
+    name: 'calcDB',
+    location: 'default',
+    createFromLocation: '~calcDB.db',
+  });
+  console.log(
+    'getDb openDB db',
+    JSON.stringify(db.name) + ' ' + JSON.stringify(db.createFromLocation),
+  );
+  console.log(
+    'getDb Answers db',
+    JSON.stringify(db) + ' ' + JSON.stringify(calculation),
+  );
+  let allAnswers = [];
+
+  const createString2 =
+    'CREATE TABLE "AllAnswers" ("Id"	INTEGER NOT NULL UNIQUE,	"answer"	TEXT,	PRIMARY KEY("Id" AUTOINCREMENT))';
+  const createString =
+    'CREATE TABLE IF NOT EXISTS AllAnswers(Id INTEGER PRIMARY KEY NOT NULL, TEXT,	PRIMARY KEY("Id" AUTOINCREMENT))';
+  let params = [];
+  console.log('createString', createString);
+
+  db.transaction(txn => {
+    txn.executeSql(
+      createString,
+      params,
+      (trans, results) => {
+        console.log('execute success results: ' + JSON.stringify(results));
+        console.log('execute success transaction: ' + JSON.stringify(trans));
+        //resolve(results);
+        //resolve(trans);
+      },
+      error => {
+        console.log('execute error: ' + JSON.stringify(error));
+        // reject(error);
+      },
+    );
+    txn.executeSql(
+      'INSERT INTO AllAnswers (answer) VALUES ( "' + calculation + '")',
+      [],
+    );
+
+    txn.executeSql('INSERT INTO AllAnswers (answer) VALUES ("222*2=456")', []);
+
+    txn.executeSql('SELECT answer FROM AllAnswers', [], function (tx, res) {
+      for (let i = 0; i < res.rows.length; ++i) {
+        console.log('each item:', res.rows.item(i));
+        allAnswers.push(res.rows.item(i));
+      }
+    });
+    return allAnswers;
+  });
+  //==================================================================================================
+  db.transaction(txn => {
+    txn.executeSql(
+      'INSERT INTO AllAnswers (answer) VALUES (' + calculation + ')',
+      [],
+    );
+
+    txn.executeSql('INSERT INTO AllAnswers (answer) VALUES (2*2=456)', []);
+
+    txn.executeSql(
+      "SELECT answer FROM sqlite_master WHERE type='table' AND name='AllAnswers'",
+      [],
+      function (tx, res) {
+        for (let i = 0; i < res.rows.length; ++i) {
+          console.log('sqlite_master:', res.rows.item(i));
+          allAnswers.push(res.rows.item(i));
+        }
+      },
+    );
+    //txn.executeSql('DROP TABLE IF EXISTS AllAnswers', []);
+
+    txn.executeSql('SELECT * FROM `Answers`', [], function (tx, res) {
+      for (let i = 0; i < res.rows.length; ++i) {
+        console.log('item:', res.rows.item(i));
+        allAnswers.push(res.rows.item(i));
+      }
+    });
+    return allAnswers;
+  });
+};
+
+//=============
 // const openDatabase = () => {
 //   const db = SQLite.openDatabase(
 //     {
@@ -65,35 +153,6 @@ const fieldName = 'answer';
 //     console.log(error);
 //   }
 // };
-//https://github.com/craftzdog/react-native-sqlite-2#readme 
-export const getDbAnswers = calculation => {
-  const db = SQLite.openDatabase(databaseName, '1.0', '', 1);
-  console.log('getDbAnswers db', db);
-  let allAnswers = [];
-  db.transaction(function (txn) {
-    txn.executeSql('DROP TABLE IF EXISTS AllAnswers', []);
-    txn.executeSql(
-      'CREATE TABLE IF NOT EXISTS Answers(user_id INTEGER PRIMARY KEY NOT NULL, answer VARCHAR(30))',
-      [],
-    );
-    txn.executeSql('INSERT INTO Answers (answer) VALUES (:answer)', [
-      calculation,
-    ]);
-    txn.executeSql('INSERT INTO Answers (answer) VALUES (:answer)', [
-      '2*2=456',
-    ]);
-    txn.executeSql('SELECT * FROM `Answers`', [], function (tx, res) {
-      for (let i = 0; i < res.rows.length; ++i) {
-        console.log('item:', res.rows.item(i));
-        allAnswers.push(res.rows.item(i));
-      }
-    });
-    return allAnswers;
-  });
-};
-
-//=============
-
 //   createTable();
 //   const db = SQLite.openDatabase(
 //     {name: databaseName, location: 'default'},
